@@ -1,4 +1,4 @@
-const commentModel = require("../models/commentModel");
+import commentModel from "../models/commentModel.js";
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -30,4 +30,4 @@ const getAllCommentsFromPost = async (req, res) => {
   } catch (err) {}
 };
 
-module.exports = { postComment, getAllCommentsFromPost };
+export { postComment, getAllCommentsFromPost };

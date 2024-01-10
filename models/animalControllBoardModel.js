@@ -2,7 +2,7 @@ import { mongoose } from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const userSchema = new mongoose.Schema({
+const acbSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -25,8 +25,14 @@ const userSchema = new mongoose.Schema({
   },
   area: {
     type: Array,
-    required: false,
+    required: true,
   },
+  followers: [
+    {
+      type: mongoose.Types.ObjectId,
+      required: "users",
+    },
+  ],
   email: {
     type: String,
     required: true,
@@ -42,12 +48,12 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.pre("save", async function () {
+acbSchema.pre("save", async function () {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-userSchema.methods.createJWT = function () {
+acbSchema.methods.createJWT = function () {
   return jwt.sign(
     { userId: this._id, name: this.name },
     process.env.JWT_SECRET,
@@ -57,8 +63,8 @@ userSchema.methods.createJWT = function () {
   );
 };
 
-userSchema.methods.comparePassword = async function (cp) {
+acbSchema.methods.comparePassword = async function (cp) {
   return await bcrypt.compare(cp, this.password);
 };
 
-export default mongoose.model("users", userSchema);
+export default mongoose.model("animalControllBoards", acbSchema);

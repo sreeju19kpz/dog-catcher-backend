@@ -1,5 +1,4 @@
-const communityModel = require("../models/communityModel");
-
+import communityModel from "../models/communityModel.js";
 function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
@@ -126,7 +125,7 @@ const discoverCommunity = async (req, res) => {
 
   // communities.filter((item) => !following.includes(item));
 };
-module.exports = {
+export {
   getAllCommunities,
   getAllJoinedCommunities,
   getSingleCommunity,

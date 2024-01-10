@@ -1,9 +1,9 @@
-import { mongoose } from "mongoose";
+import mongoose from "mongoose";
 
-const reportsSchema = new mongoose.Schema({
+const ACBReportsSchema = new mongoose.Schema({
   reportedBy: {
     type: mongoose.Types.ObjectId,
-    ref: "users",
+    ref: "animalControllBoards",
     required: true,
   },
   description: {
@@ -42,4 +42,4 @@ const reportsSchema = new mongoose.Schema({
   ],
 });
 
-export default mongoose.model("reports", reportsSchema);
+export default mongoose.model("acbreports", ACBReportsSchema);

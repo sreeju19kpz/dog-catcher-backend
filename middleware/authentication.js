@@ -1,5 +1,5 @@
-const userModel = require("../models/userModel");
-const jwt = require("jsonwebtoken");
+import userModel from "../models/userModel.js";
+import jwt from "jsonwebtoken";
 
 const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -16,4 +16,4 @@ const auth = async (req, res, next) => {
     throw new Error("not fount");
   }
 };
-module.exports = auth;
+export default auth;

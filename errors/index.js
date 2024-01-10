@@ -1,5 +1,4 @@
-const { StatusCodes } = require("http-status-codes");
-const AuthenticationError = require("./authentication-err");
-const BadRequest = require("./bad-request");
+import AuthenticationError from "./authentication-err";
+import BadRequest from "./bad-request";
 
-module.exports = { customAPIError, AuthenticationError, BadRequest };
+export { customAPIError, AuthenticationError, BadRequest };

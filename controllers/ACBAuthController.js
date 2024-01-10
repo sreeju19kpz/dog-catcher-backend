@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import userModel from "../models/userModel.js";
+import userModel from "../models/animalControllBoardModel.js";
 
 const register = async (req, res) => {
   const user = await userModel.create({ ...req.body });

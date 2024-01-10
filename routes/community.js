@@ -1,19 +1,17 @@
-const express = require("express");
-const router = express.Router();
+import Express from "express";
+const router = Express.Router();
 
-const {
+import {
   getAllCommunities,
   getSingleCommunity,
-
   getAllJoinedCommunities,
-
   joinCommunity,
   discoverCommunity,
   createCommunity,
   memberVerify,
   /* updateCommunity,
   deleteCommunity, */
-} = require("../controllers/communityController");
+} from "../controllers/communityController.js";
 
 router.route("/all").get(getAllCommunities);
 router.route("/").post(createCommunity);
@@ -26,4 +24,4 @@ router.route("/:id").get(getSingleCommunity);
 router.route("/:id/ismember").get(memberVerify);
 
 router.route("/:id/join").put(joinCommunity);
-module.exports = router;
+export default router;

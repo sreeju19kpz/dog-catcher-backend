@@ -4,4 +4,4 @@ class customAPIError extends Error {
   }
 }
 
-module.exports = customAPIError;
+export default customAPIError;

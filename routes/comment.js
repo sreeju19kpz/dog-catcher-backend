@@ -1,10 +1,10 @@
-const express = require("express");
-const router = express.Router();
-const {
+import Express from "express";
+const router = Express.Router();
+import {
   postComment,
   getAllCommentsFromPost,
-} = require("../controllers/commentController");
+} from "../controllers/commentController.js";
 
 router.route("/").post(postComment);
 router.route("/:id").get(getAllCommentsFromPost);
-module.exports = router;
+export default router;

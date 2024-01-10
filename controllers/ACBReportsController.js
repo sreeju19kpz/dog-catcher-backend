@@ -1,5 +1,6 @@
-import ReportsModel from "../models/ReportsModel.js";
+import ReportsModel from "../models/ACBReportsModel.js";
 import userModel from "../models/userModel.js";
+import animalControllBoardModel from "../models/animalControllBoardModel.js";
 
 const addReport = async (req, res) => {
   req.body.reportedBy = req.user.userId;
@@ -31,16 +32,19 @@ const getAllReportsByUser = async (req, res) => {
     res.status(200).json({ err });
   }
 };
-const getAllReportsFromArea = async (req, res) => {
+const getAllReportsForUser = async (req, res) => {
   try {
     const area = await userModel.findOne(
       { _id: req.user.userId },
       { area: 1, _id: 0 }
     );
+    const followings = await animalControllBoardModel.find({
+      followers: { $in: req.user.userId },
+    });
 
     const reports = await ReportsModel.find({
-      area: { $in: area.area },
-    }).populate("reportedBy", ["name", "_id"]);
+      $or: [{ area: { $in: area.area } }, { reportedBy: { $in: followings } }],
+    }).populate("reportedBy");
     res.status(200).json(reports);
   } catch (err) {
     res.status(200).json({ err });
@@ -50,6 +54,7 @@ const getAllReportsFromArea = async (req, res) => {
 const like = async (req, res) => {
   try {
     const report = await ReportsModel.findOne({ _id: req.params.id });
+    console.log(report);
     const data =
       report.likes.filter((item) => item.toString() === req.user.userId)
         .length > 0
@@ -95,7 +100,7 @@ const getIsLiked = async (req, res) => {
 export {
   addReport,
   getAllReports,
-  getAllReportsFromArea,
+  getAllReportsForUser,
   getAllReportsByUser,
   like,
   getIsLiked,

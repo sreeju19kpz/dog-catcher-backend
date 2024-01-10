@@ -1,5 +1,5 @@
 import Express from "express";
-import { register, login } from "../controllers/authController.js";
+import { register, login } from "../controllers/ACBAuthController.js";
 const router = Express.Router();
 
 router.route("/register").post(register);

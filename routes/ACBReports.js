@@ -1,18 +1,18 @@
 import Express from "express";
+const router = Express.Router();
 import {
   addReport,
   getAllReports,
-  getAllReportsFromArea,
+  getAllReportsForUser,
   like,
   getIsLiked,
   getAllReportsByUser,
-} from "../controllers/reportsController.js";
-const router = Express.Router();
+} from "../controllers/ACBReportsController.js";
 
 router.route("/").post(addReport);
 router.route("/").get(getAllReports);
-router.route("/user").get(getAllReportsByUser);
-router.route("/area").get(getAllReportsFromArea);
+router.route("/user").get(getAllReportsForUser);
+router.route("/area").get(getAllReportsByUser);
 router.route("/:id/isliked").get(getIsLiked);
 router.route("/:id/like").put(like);
 
