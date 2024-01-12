@@ -27,6 +27,25 @@ const userSchema = new mongoose.Schema({
     type: Array,
     required: false,
   },
+  expoPushToken: [
+    {
+      type: String,
+      required: false,
+    },
+  ],
+  notifications: [
+    {
+      postId: {
+        type: mongoose.Types.ObjectId,
+        ref: "acbreports",
+        required: true,
+      },
+      notification: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   email: {
     type: String,
     required: true,

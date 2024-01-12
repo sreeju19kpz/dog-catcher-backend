@@ -60,6 +60,18 @@ const getUserBanner = async (req, res) => {
     res.status(500).json({ msg: err });
   }
 };
+const getNotifications = async (req, res) => {
+  try {
+    const notifications = await userModel.findOne(
+      { _id: req.user.userId },
+      { notifications: 1, _id: 0 }
+    );
+
+    res.status(200).json(notifications);
+  } catch (err) {
+    res.status(500).json({ msg: err });
+  }
+};
 
 export {
   getAllUsers,
@@ -68,4 +80,5 @@ export {
   getUserBanner,
   updateUserFavArea,
   getUserAra,
+  getNotifications,
 };

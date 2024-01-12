@@ -30,7 +30,7 @@ const ACBReportsSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ["reported", "working", "captured"],
+    enum: ["reported", "clearing", "captured"],
     default: "reported",
   },
   likes: [

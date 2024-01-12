@@ -16,9 +16,7 @@ const app = Express();
 
 const http = require("http").Server(app);
 initSocket(http);
-
 require("dotenv").config();
-
 import authenticateUser from "./middleware/authentication.js";
 import { initSocket } from "./utils/socketHandler.js";
 app.use(cors({ origin: "*" }));

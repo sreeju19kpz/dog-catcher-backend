@@ -8,12 +8,14 @@ import {
   getUserBanner,
   updateUserFavArea,
   getUserAra,
+  getNotifications,
   /* updateUser,
   deleteUser, */
 } from "../controllers/userController.js";
 
 router.route("/all").get(getAllUsers);
 router.route("/").post(createUser);
+router.route("/notifications").get(getNotifications);
 router.route("/user/area").put(updateUserFavArea).get(getUserAra);
 router.route("/user/banner").get(getUserBanner);
 router
