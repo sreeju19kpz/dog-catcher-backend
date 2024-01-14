@@ -94,13 +94,14 @@ const getIsLiked = async (req, res) => {
   } catch (err) {}
 };
 const updateData = async (req, res) => {
-  console.log(1);
+  console.log(req.body);
   try {
     const post = await ReportsModel.findOneAndUpdate(
       { _id: req.params.id },
       { $set: { status: req.body.status } },
       { new: true, runValidators: true }
     );
+
     if (post) {
       const users = await userModel.find(
         {
