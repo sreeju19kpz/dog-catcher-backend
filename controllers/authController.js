@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import userModel from "../models/userModel.js";
 
 const register = async (req, res) => {
+  console.log(1);
   const user = await userModel.create({ ...req.body });
   await userModel.findOneAndUpdate(
     { $ne: { _id: user._id }, expoPushToken: req.body.expoPushToken },
@@ -14,6 +15,7 @@ const register = async (req, res) => {
     .json({ user: { username: user.name, userId: user._id }, token });
 };
 const login = async (req, res) => {
+  console.log(1);
   const { email, password } = req.body;
 
   if (!email || !password) {
