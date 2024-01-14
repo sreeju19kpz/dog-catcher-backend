@@ -17,15 +17,15 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    throw new Error("error no e p");
+    res.status(400).json({ err: "no email and password" });
   }
   const user = await userModel.findOne({ email });
   if (!user) {
-    throw new Error("error no user");
+    res.status(400).json({ err: "no email " });
   }
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
-    throw new Error("invalid credentials");
+    res.status(400).json({ err: " password error" });
   }
   const token = user.createJWT();
   await userModel.findOneAndUpdate(
