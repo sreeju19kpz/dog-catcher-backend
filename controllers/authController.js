@@ -8,9 +8,10 @@ const register = async (req, res) => {
     { $pull: { expoPushToken: req.body.expoPushToken } }
   );
   const token = user.createJWT();
+
   res
     .status(StatusCodes.CREATED)
-    .json({ user: { username: user.name }, token });
+    .json({ user: { username: user.name, userId: user._id }, token });
 };
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -35,7 +36,9 @@ const login = async (req, res) => {
     { _id: user._id },
     { $push: { expoPushToken: req.body.expoPushToken } }
   );
-  res.status(200).json({ token });
+  res
+    .status(200)
+    .json({ user: { username: user.name, userId: user._id }, token });
 };
 
 export { register, login };
