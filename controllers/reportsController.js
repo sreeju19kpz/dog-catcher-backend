@@ -6,8 +6,14 @@ let expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN });
 const addReport = async (req, res) => {
   req.body.reportedBy = req.user.userId;
   try {
-    const report = await ReportsModel.create({ ...req.body });
-    res.status(200).json(report);
+    const report = await ReportsModel.create({ ...req.body }).populate(
+      "reportedBy",
+      ["name", "_id"]
+    );
+    res.status(200).json({
+      ...report,
+      reportedBy: { _id: req.user.userId, name: req.user.name },
+    });
   } catch (err) {
     res.status(200).json({ err });
   }
@@ -94,13 +100,12 @@ const getIsLiked = async (req, res) => {
   } catch (err) {}
 };
 const updateData = async (req, res) => {
-  console.log(req.body);
   try {
     const post = await ReportsModel.findOneAndUpdate(
       { _id: req.params.id },
       { $set: { status: req.body.status } },
       { new: true, runValidators: true }
-    );
+    ).populate("reportedBy", ["name"]);
 
     if (post) {
       const users = await userModel.find(
@@ -140,7 +145,7 @@ const updateData = async (req, res) => {
         messages.push({
           to: pushToken,
           sound: "default",
-          body: `${post.status}`,
+          body: `${post.reportedBy.name} changed post status to ${post.status}`,
           data: { url: `https://mydcapp.com/alerts/acbdetails/${post._id}` },
         });
       }
@@ -198,7 +203,7 @@ const updateData = async (req, res) => {
         }
       })();
 
-      res.status(400).json({ users, post });
+      res.status(200).json(post?.status);
     }
   } catch (err) {
     res.status(400).json({ err });
